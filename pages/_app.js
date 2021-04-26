@@ -1,12 +1,7 @@
-import "@shoelace-style/shoelace/dist/shoelace/shoelace.css";
+import '@shoelace-style/shoelace/dist/themes/base.css';
 import '../styles/globals.css'
 
 import { useLayoutEffect, useRef } from "react";
-
-import {
-  setAssetPath,
-  defineCustomElements
-} from "@shoelace-style/shoelace";
 
 function CustomEls({ URL }) {
   const customEls = useRef(false);
@@ -15,10 +10,16 @@ function CustomEls({ URL }) {
     if (customEls.current) {
       return;
     }
-    setAssetPath(`${URL}/static/static`);
+    const {
+      setBasePath
+    } = require("@shoelace-style/shoelace/dist/utilities/base-path");
+
+    setBasePath(`${URL}/static/static`);
+
+    // This imports all components
+    require("@shoelace-style/shoelace/dist/shoelace");
     // If you're wanting to selectively import components, replace this line with your own definitions
-    defineCustomElements();
-    // customElements.define("sl-button", SlButton);
+    // require("@shoelace-style/shoelace/dist/components/button/button");
     customEls.current = true;
   }, [URL, customEls]);
 
