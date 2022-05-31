@@ -1,20 +1,25 @@
-const path = require("path");
-const CopyPlugin = require("copy-webpack-plugin");
-const withPlugins = require('next-compose-plugins');
-const withTM = require('next-transpile-modules')(['@shoelace-style/shoelace']);
+import { dirname, resolve } from 'path';
+import { fileURLToPath } from 'url';
+import CopyPlugin from "copy-webpack-plugin";
+import withPlugins from 'next-compose-plugins';
+import withTM from 'next-transpile-modules'
 
-module.exports =
-    withPlugins([withTM], {
+const withTMCompiled = withTM(['@shoelace-style/shoelace']);
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
+export default withPlugins([withTMCompiled], {
+        experimental: { esmExternals: true },
         webpack: (config) => {
             config.plugins.push(
                 new CopyPlugin({
                     patterns: [
                         {
-                            from: path.resolve(
+                            from: resolve(
                                 __dirname,
                                 "node_modules/@shoelace-style/shoelace/dist/assets/icons"
                             ),
-                            to: path.resolve(__dirname, "static/icons"),
+                            to: resolve(__dirname, "static/icons"),
                         },
                     ],
                 })
