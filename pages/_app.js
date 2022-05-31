@@ -26,9 +26,10 @@ function CustomEls({ URL }) {
 }
 
 function MyApp({ Component, pageProps, URL }) {
+  const isBrowser = typeof window !== 'undefined';
   return (
     <>
-      {process.browser && <CustomEls URL={URL} />}
+      {isBrowser && <CustomEls URL={URL} />}
       <Component {...pageProps} />
     </>
   )

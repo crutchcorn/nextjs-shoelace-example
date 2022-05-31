@@ -9,7 +9,7 @@ const withTMCompiled = withTM(['@shoelace-style/shoelace']);
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 export default withPlugins([withTMCompiled], {
-        experimental: { esmExternals: true },
+        experimental: { esmExternals: 'loose' },
         webpack: (config) => {
             config.plugins.push(
                 new CopyPlugin({
